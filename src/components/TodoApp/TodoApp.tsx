@@ -1,11 +1,15 @@
 import { useState } from "react";
 import { TodoList } from "../TodoList/TodoList";
 import { Todo } from "../../types/Todo";
+import { TodoFilters } from "../TodoFilters/TodoFilters";
 
 export const TodoApp: React.FC= () => {
   const [todoText, setTodoText] = useState('');
   const [todos, setTodos] = useState<Todo[]>([]);
- 
+  const activeCount = todos.filter(todo => !todo.completed).length;
+  const itemsLeftText = `${activeCount} item${activeCount !== 1 ? 's' : ''} left`;
+  const someTodosCompleted = todos.some(todo => todo.completed);
+
   const changeTextHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     setTodoText(event.target.value);
   };
@@ -50,8 +54,24 @@ export const TodoApp: React.FC= () => {
         </form>
       </header>
 
-      <TodoList todos={todos}/>
+      <section>
+        <TodoList todos={todos}/>
+      </section>
 
+      <footer>
+        <span>{itemsLeftText}</span>
+
+        <TodoFilters />
+
+        {someTodosCompleted && (
+        <button
+          type="button"
+        >
+          Clear completed
+        </button>
+        )}
+
+      </footer>
     </div>
   )
 }

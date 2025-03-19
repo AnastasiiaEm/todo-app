@@ -1,14 +1,18 @@
-import { useState } from "react";
+import { Dispatch, useContext, useState } from "react";
 import { TodoList } from "../TodoList/TodoList";
-import { Todo } from "../../types/Todo";
 import { TodoFilters } from "../TodoFilters/TodoFilters";
+import { TodosContext } from "../../store/TodoContext";
+import { Action, State } from "../../types/Context";
 
 export const TodoApp: React.FC= () => {
+  const [state, dispatch]
+  = useContext(TodosContext) as [State, Dispatch<Action>];
+  const { todos } = state;
   const [todoText, setTodoText] = useState('');
-  const [todos, setTodos] = useState<Todo[]>([]);
   const activeCount = todos.filter(todo => !todo.completed).length;
   const itemsLeftText = `${activeCount} item${activeCount !== 1 ? 's' : ''} left`;
   const someTodosCompleted = todos.some(todo => todo.completed);
+  const areAllTodosChecked = todos.every(todo => todo.completed);
 
   const changeTextHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     setTodoText(event.target.value);
@@ -22,18 +26,18 @@ export const TodoApp: React.FC= () => {
 
     if (textIsValid) {
       setTodoText('');
-      addNewTodo(newText)
+      dispatch({ type: 'ADD_TASK', payload: newText });
     }
-  }
+  };
 
-  const addNewTodo = (newText: string) => {
-    const newTask = {
-      id: +new Date(),
-      title: newText,
-      completed: false,
-    };
+  const clearCompletedTodosHandler = () => {
+    dispatch({ type: 'CLEAR_COMPLETED' });
+  };
 
-    setTodos([...todos, newTask])
+  const toggleAllTodosHandler = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    dispatch({ type: 'TOGGLE_ALL', payload: event.target.checked})
   }
 
   return (
@@ -55,6 +59,14 @@ export const TodoApp: React.FC= () => {
       </header>
 
       <section>
+        <input 
+          type="checkbox"
+          id="toggle-all"
+          checked={areAllTodosChecked}
+          onChange={toggleAllTodosHandler}
+        />
+        <label htmlFor="toggle-all">Mark all as complete</label>
+
         <TodoList todos={todos}/>
       </section>
 
@@ -66,6 +78,7 @@ export const TodoApp: React.FC= () => {
         {someTodosCompleted && (
         <button
           type="button"
+          onClick={clearCompletedTodosHandler}
         >
           Clear completed
         </button>

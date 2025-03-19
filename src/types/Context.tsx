@@ -1,0 +1,16 @@
+import { Todo } from "./Todo";
+
+export interface State {
+  todos: Todo[];
+  filter: Filter;
+};
+
+export type Action =
+  | { type: 'ADD_TASK', payload: string }
+  | { type: 'REMOVE_TASK', payload: number }
+  | { type: 'TOGGLE_TODO', payload: number }
+  | { type: 'TOGGLE_ALL', payload: boolean }
+  | { type: 'CHANGE_FILTER', payload: Filter }
+  | { type: 'CLEAR_COMPLETED' };
+
+export type Filter = 'ALL' | 'COMPLETED' | 'ACTIVE';

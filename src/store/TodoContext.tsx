@@ -1,5 +1,7 @@
 import { createContext, Dispatch, useReducer } from "react"
 import { Action, Filter, State } from "../types/Context";
+import { useLocalStorage } from "../hooks/useLocalStorage";
+import { Todo } from "../types/Todo";
 
 const reducer = (state: State, action: Action) => {
   switch (action.type) {
@@ -92,8 +94,18 @@ type Props = {
 };
 
 export const TodosProvider: React.FC<Props> = ({ children }) => {
+  const [initialValue, save] = useLocalStorage(
+    'todos', [] as Todo[],
+  );
+
+  const stateWithLocalStorage = {
+    ...initialState,
+    todos: initialValue,
+    onSave: save,
+  };
+
   const value = useReducer(
-    reducer, initialState,
+    reducer, stateWithLocalStorage,
   );
 
   return (

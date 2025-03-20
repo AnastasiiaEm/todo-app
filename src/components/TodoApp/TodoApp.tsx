@@ -1,4 +1,4 @@
-import { Dispatch, useContext, useState } from "react";
+import { Dispatch, useContext, useEffect, useState } from "react";
 import { TodoList } from "../TodoList/TodoList";
 import { TodoFilters } from "../TodoFilters/TodoFilters";
 import { TodosContext } from "../../store/TodoContext";
@@ -16,6 +16,12 @@ export const TodoApp: React.FC= () => {
   const areAllTodosChecked = todos.every(todo => todo.completed);
 
   const visibleTodos = getVisibleTodos(filter, todos);
+
+  useEffect(() => {
+    if (state.onSave) {
+      state.onSave(todos);
+    }
+  }, [state, todos]);
 
   const changeTextHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     setTodoText(event.target.value);

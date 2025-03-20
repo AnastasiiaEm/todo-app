@@ -21,22 +21,19 @@ export const TodoItem:React.FC<Props> = ({ todo }) => {
   }
 
   return (
-    <li>
-      <div>
-        <input 
-          type="checkbox"
-          checked={completed}
-          onChange={toggleCompletedHandler}
-        />
+    <div>
+      <input 
+        type="checkbox"
+        checked={completed}
+        onChange={toggleCompletedHandler}
+      />
 
-        {title}
+      {title}
 
-        <button 
-          type="button"
-          onClick={removeTodoHandler}
-        >X</button>
-      </div>
-
-    </li>
+      <button 
+        type="button"
+        onClick={removeTodoHandler}
+      >X</button>
+    </div>
   )
 }

@@ -68,6 +68,13 @@ const reducer = (state: State, action: Action) => {
       };
     }
 
+    case 'REORDER_TASKS': {
+      return {
+        ...state,
+        todos: action.payload,
+      };
+    }
+
     default:
       return state;
   }

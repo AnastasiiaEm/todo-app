@@ -11,6 +11,7 @@ export type Action =
   | { type: 'TOGGLE_TODO', payload: number }
   | { type: 'TOGGLE_ALL', payload: boolean }
   | { type: 'CHANGE_FILTER', payload: Filter }
-  | { type: 'CLEAR_COMPLETED' };
+  | { type: 'CLEAR_COMPLETED' }
+  | { type: 'REORDER_TASKS', payload: Todo[]}
 
 export type Filter = 'ALL' | 'COMPLETED' | 'ACTIVE';

@@ -52,6 +52,13 @@ const reducer = (state: State, action: Action) => {
       };
     }
 
+    case "CHANGE_FILTER": {
+      return {
+        ...state,
+        filter: action.payload,
+      };
+    }
+
     case "CLEAR_COMPLETED": {
       const updatedTodos = state.todos.filter(todo => !todo.completed);
 

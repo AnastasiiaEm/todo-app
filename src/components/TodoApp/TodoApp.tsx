@@ -3,16 +3,19 @@ import { TodoList } from "../TodoList/TodoList";
 import { TodoFilters } from "../TodoFilters/TodoFilters";
 import { TodosContext } from "../../store/TodoContext";
 import { Action, State } from "../../types/Context";
+import { getVisibleTodos } from "../utils/todoUtils";
 
 export const TodoApp: React.FC= () => {
   const [state, dispatch]
   = useContext(TodosContext) as [State, Dispatch<Action>];
-  const { todos } = state;
+  const { todos, filter } = state;
   const [todoText, setTodoText] = useState('');
   const activeCount = todos.filter(todo => !todo.completed).length;
   const itemsLeftText = `${activeCount} item${activeCount !== 1 ? 's' : ''} left`;
   const someTodosCompleted = todos.some(todo => todo.completed);
   const areAllTodosChecked = todos.every(todo => todo.completed);
+
+  const visibleTodos = getVisibleTodos(filter, todos);
 
   const changeTextHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
     setTodoText(event.target.value);
@@ -67,7 +70,7 @@ export const TodoApp: React.FC= () => {
         />
         <label htmlFor="toggle-all">Mark all as complete</label>
 
-        <TodoList todos={todos}/>
+        <TodoList todos={visibleTodos}/>
       </section>
 
       <footer>

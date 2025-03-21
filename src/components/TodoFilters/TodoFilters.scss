@@ -1,0 +1,28 @@
+@use '../../styles/vars' as *;
+
+.filters {
+  display: flex;
+  gap: 15px;
+
+  @media (max-width: 375px) {
+    background-color: $color-white;
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 14px;
+    padding: 15px 20px;
+    justify-content: center;
+  }
+
+  &__filter {
+    text-decoration: none;
+    color: inherit;
+
+    &:hover {
+      color: $very-dark-grayish-blue;
+    }
+
+    &.selected {
+      color: $bright-blue;
+    }
+  }
+}

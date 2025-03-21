@@ -5,7 +5,10 @@ import { TodosProvider } from './store/TodoContext';
 export const App: React.FC = () => {
   return (
     <TodosProvider>
-      <TodoApp />
+      <header className='header'></header>
+      <main className='main'>
+        <TodoApp />
+      </main>
     </TodosProvider>
   );
 };

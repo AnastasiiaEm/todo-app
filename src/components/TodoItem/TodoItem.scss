@@ -1,0 +1,83 @@
+@use '../../styles/extends';
+@use '../../styles/vars' as *;
+
+.item {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  gap: 5px;
+  background-color: $color-white;
+  min-height: 45px;
+  line-height: 1.4em;
+  padding: 16px;
+  padding-left: 60px;
+  align-items: center;
+  color: $very-dark-grayish-blue;
+  position: relative;
+
+  border-bottom: 1px solid $very-light-grayish-blue;
+
+  &.completed {
+    color: $light-grayish-blue;
+    text-decoration: line-through;
+  }
+
+  &__toggle {
+    width: 1px;
+    height: 1px;
+    border: none;
+    opacity: 0;
+    position: absolute;
+    right: 100%;
+    bottom: 100%;
+  }
+
+  &__toggle-label {
+    width: 24px;
+    height: 24px;
+    position: absolute;
+    top: 13px;
+    left: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+  }
+
+  &__toggle-label::before {
+    content: url('../../assets/images/icon-unchecked.svg');
+    display: block;
+    -webkit-transform: rotate(90deg);
+    transform: rotate(90deg);
+  }
+
+  &__toggle:checked + &__toggle-label::before {
+    content: url('../../assets/images/icon-checked.svg');
+    -webkit-transform: rotate(90deg);
+    transform: rotate(90deg);
+  }
+
+  &__delete-btn {
+    display: none;
+    margin-left: auto;
+    width: 20px;
+    height: 20px;
+    @extend %button;
+
+    @media (max-width: 375px) {
+      display: block;
+    }
+  }
+
+  &__delete-icon {
+    background-image: url('..//../assets/images/icon-cross.svg');
+    background-repeat: no-repeat;
+    display: block;
+    width: 18px;
+    height: 18px;
+  }
+
+  &:hover &__delete-btn{
+    display: block;
+  }
+}

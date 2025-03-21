@@ -4,6 +4,7 @@ import { TodoFilters } from "../TodoFilters/TodoFilters";
 import { TodosContext } from "../../store/TodoContext";
 import { Action, State } from "../../types/Context";
 import { getVisibleTodos } from "../utils/todoUtils";
+import './TodoApp.scss'
 
 export const TodoApp: React.FC= () => {
   const [state, dispatch]
@@ -50,29 +51,36 @@ export const TodoApp: React.FC= () => {
   }
 
   return (
-    <div>
-      <header>
-        <div>
-          <h1>todo</h1>
-          {/* TODO add icon */}
+    <div className="todo-app">
+      <header className="todo-app__header">
+        <div className="todo-app__header-top">
+          <h1 className="todo-app__title">todo</h1>
+          <button className="todo-app__theme-switch-btn">
+            <span className="todo-app__theme-switch-icon"></span>
+          </button>
         </div>
 
-        <form onSubmit={addTodoHandler} onBlur={addTodoHandler}>
+        <form 
+          onSubmit={addTodoHandler} 
+          onBlur={addTodoHandler}>
           <input 
             type="text"
             placeholder="Create a new todo..."
             value={todoText}
             onChange={changeTextHandler}
+            name="newTodo"
+            className="todo-app__new-todo"
             />
         </form>
       </header>
 
-      <section>
+      <section className="todo-app__main">
         <input 
           type="checkbox"
           id="toggle-all"
           checked={areAllTodosChecked}
           onChange={toggleAllTodosHandler}
+          className="todo-app__toggle-all"
         />
         <label htmlFor="toggle-all">Mark all as complete</label>
 
@@ -80,20 +88,31 @@ export const TodoApp: React.FC= () => {
       </section>
 
       <footer>
-        <span>{itemsLeftText}</span>
+        <div className="todo-app__footer">
+          <span>{itemsLeftText}</span>
 
-        <TodoFilters />
 
-        {someTodosCompleted && (
-        <button
-          type="button"
-          onClick={clearCompletedTodosHandler}
-        >
-          Clear completed
-        </button>
-        )}
+          <div className="todo-app__filters todo-app__filters--desktop">
+            <TodoFilters />
+          </div>
 
+          <button
+            type="button"
+            onClick={clearCompletedTodosHandler}
+            className={`todo-app__clear-completed-btn ${someTodosCompleted ? "visible" : ""}`}
+            >
+            Clear completed
+          </button>
+        </div>
+
+        <div className="todo-app__filters todo-app__filters--mobile">
+          <TodoFilters />
+        </div>
       </footer>
+      
+      <section className="todo-app__information">
+        <p>Drag and drop to reorder list</p>
+      </section>
     </div>
   )
 }

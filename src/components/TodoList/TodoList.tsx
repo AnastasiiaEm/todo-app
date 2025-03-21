@@ -4,6 +4,7 @@ import { TodoItem } from "../TodoItem/TodoItem";
 import { Reorder } from "framer-motion";
 import { TodosContext } from "../../store/TodoContext";
 import { Action, State } from "../../types/Context";
+import './TodoList.scss';
 
 type Props = {
   todos: Todo[],
@@ -20,11 +21,10 @@ export const TodoList: React.FC<Props> = ({ todos}) => {
     <Reorder.Group 
       values={todos}
       onReorder={handleReorder}
+      className="list"
     >
       {todos.map(todo => (
-      <Reorder.Item key={todo.id} value={todo}>
-        <TodoItem todo={todo} />
-      </Reorder.Item>
+        <TodoItem todo={todo} key={todo.id}/>
       ))}
     </Reorder.Group>
   )

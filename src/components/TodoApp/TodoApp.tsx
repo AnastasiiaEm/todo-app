@@ -87,32 +87,36 @@ export const TodoApp: React.FC= () => {
         <TodoList todos={visibleTodos}/>
       </section>
 
-      <footer>
-        <div className="todo-app__footer">
-          <span>{itemsLeftText}</span>
+      {todos.length !== 0 && (
+           <footer>
+           <div className="todo-app__footer">
+             <span>{itemsLeftText}</span>
+   
+   
+             <div className="todo-app__filters todo-app__filters--desktop">
+               <TodoFilters />
+             </div>
+   
+             <button
+               type="button"
+               onClick={clearCompletedTodosHandler}
+               className={`todo-app__clear-completed-btn ${someTodosCompleted ? "visible" : ""}`}
+               >
+               Clear completed
+             </button>
+           </div>
+   
+           <div className="todo-app__filters todo-app__filters--mobile">
+             <TodoFilters />
+           </div>
+         </footer>
+      )}
 
-
-          <div className="todo-app__filters todo-app__filters--desktop">
-            <TodoFilters />
-          </div>
-
-          <button
-            type="button"
-            onClick={clearCompletedTodosHandler}
-            className={`todo-app__clear-completed-btn ${someTodosCompleted ? "visible" : ""}`}
-            >
-            Clear completed
-          </button>
-        </div>
-
-        <div className="todo-app__filters todo-app__filters--mobile">
-          <TodoFilters />
-        </div>
-      </footer>
-      
-      <section className="todo-app__information">
-        <p>Drag and drop to reorder list</p>
-      </section>
+      {todos.length !== 0 && (
+        <section className="todo-app__information">
+          <p>Drag and drop to reorder list</p>
+        </section>
+      )}
     </div>
   )
 }
